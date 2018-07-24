@@ -1,9 +1,23 @@
 import React from 'react';
-import data from './family.json';
+import data from './jsondata/./family.json';
 
 class Family extends React.Component {
+    constructor(props) {
+    super(props) 
+    this.state = { search: '' }
+    this.updateSearch = this.updateSearch.bind(this);
+    }
+
+    updateSearch(event) {
+        this.setState({
+            search: event.target.value.substr(0, 10)
+        })
+    }
+
     render() {
+
         return (
+            <div>
             <table>
                <tbody> 
                    <tr>
@@ -27,6 +41,10 @@ class Family extends React.Component {
 
                 </tbody>
             </table>
+            <input type="text" 
+                value={this.state.search}
+                onChange={this.updateSearch}/>
+            </div>
         )
     }
 }

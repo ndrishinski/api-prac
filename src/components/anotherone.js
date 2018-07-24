@@ -1,5 +1,5 @@
 import React from 'react';
-import data from './data.json';
+import data from './jsondata/./data.json';
 
 class UsingMap extends React.Component {
     render() {

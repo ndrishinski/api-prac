@@ -4,8 +4,10 @@ class Users extends React.Component {
     constructor(props) {
     super(props)
     this.state = {
-        users: []
+        users: [],
+        search: ''
     };
+    this.updateSearch = this.updateSearch.bind(this);
     }
 
     componentDidMount() {
@@ -15,19 +17,32 @@ class Users extends React.Component {
             this.setState({ users: json })
         })
     }
+
+    updateSearch(event) {
+        this.setState({
+            search: event.target.value.substr(0, 10)
+        })
+    }
+
     render() {
-        let { users } = this.state
+
+        let filteredChange = this.state.users.filter(
+            (user) => {
+                return user.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+            }
+        );
 
         return (
             <div>
-                <table>
+            <table>
+                <tbody>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th>City</th>
                             <th>Phone Number</th>
                         </tr>
-                        {users.map(user => (
+                        {filteredChange.map(user => (
                         <tr key={user.id}>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
@@ -35,7 +50,10 @@ class Users extends React.Component {
                             <td>{user.phone}</td>
                         </tr>
             ))}
-                </table>
+                </tbody>
+            </table>
+            <input type="text" value={this.state.search}
+                onChange={this.updateSearch} />
             </div>
         )
     }
